@@ -28,6 +28,7 @@ from paasta_tools.api import settings
 from paasta_tools.api.views import instance
 from paasta_tools.autoscaling.autoscaling_service_lib import ServiceAutoscalingInfo
 from paasta_tools.envoy_tools import EnvoyBackend
+from paasta_tools.instance.kubernetes import ServiceMesh
 from paasta_tools.long_running_service_tools import ServiceNamespaceConfig
 from paasta_tools.marathon_tools import get_short_task_id
 from paasta_tools.mesos.exceptions import SlaveDoesNotExist
@@ -568,8 +569,9 @@ def test_kubernetes_smartstack_status(
     mock_service_namespace_config = ServiceNamespaceConfig()
     mock_settings = mock.Mock()
 
-    smartstack_status = instance.pik.smartstack_status(
+    smartstack_status = instance.pik.mesh_status(
         service="fake_service",
+        service_mesh=ServiceMesh.SMARTSTACK,
         instance="fake_instance",
         job_config=mock_job_config,
         service_namespace_config=mock_service_namespace_config,
@@ -1087,6 +1089,7 @@ def test_kubernetes_instance_status_bounce_method(
         instance_type="kubernetes",
         verbose=0,
         include_smartstack=False,
+        include_envoy=False,
         settings=settings,
     )
     assert actual["bounce_method"] == mock_job_config.get_bounce_method()
@@ -1121,6 +1124,7 @@ def test_kubernetes_instance_status_evicted_nodes(
         instance_type="kubernetes",
         verbose=0,
         include_smartstack=False,
+        include_envoy=False,
         settings=mock_settings,
     )
     assert instance_status["evicted_count"] == 1
