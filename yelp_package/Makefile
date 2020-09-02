@@ -44,7 +44,7 @@ build_%_docker:
 
 .SECONDEXPANSION:
 itest_%: package_$$* bintray_$$*
-	$(DOCKER_RUN) /work/yelp_package/itest/ubuntu.sh paasta-tools_$(ACTUAL_PACKAGE_VERSION)_amd64.deb
+	$(DOCKER_RUN) /work/yelp_package/itest/ubuntu.sh paasta-tools_$(ACTUAL_PACKAGE_VERSION)_arm64.deb
 
 PTG_VERSION=0.0.7
 PTG_SUM=cc95361e409939376032980ff1029d24a40b9f227abba47d629252a1f13e10bf
