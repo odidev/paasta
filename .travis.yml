@@ -5,6 +5,7 @@ branches:
     - /^v[0-9.]+$/
     - /^travis-ci-.*$/
 language: python
+arch: arm64
 cache:
   pip: true
   directories:
@@ -82,6 +83,6 @@ jobs:
   include:
     - env: MAKE_TARGET=k8s_itests
       before_script:
-        - curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl && chmod +x kubectl && sudo mv kubectl /usr/local/bin/
+        - curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/arm64/kubectl && chmod +x kubectl && sudo mv kubectl /usr/local/bin/
       script:
         make k8s_itests
