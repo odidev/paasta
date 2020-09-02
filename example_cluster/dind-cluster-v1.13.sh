@@ -754,8 +754,8 @@ function dind::make-for-linux {
 
 function dind::check-binary {
   local filename="$1"
-  local dockerized="_output/dockerized/bin/linux/amd64/${filename}"
-  local plain="_output/local/bin/linux/amd64/${filename}"
+  local dockerized="_output/dockerized/bin/linux/arm64/${filename}"
+  local plain="_output/local/bin/linux/arm64/${filename}"
   dind::set-build-volume-args
   # FIXME: don't hardcode amd64 arch
   if [ -n "${KUBEADM_DIND_LOCAL:-${force_local:-}}" ]; then
@@ -1852,7 +1852,7 @@ function dind::up {
       dind::retry "${kubectl}" --context "$ctx" apply -f ${kube_router_config}
       rm "${kube_router_config}"
       dind::retry "${kubectl}" --context "$ctx" -n kube-system delete ds kube-proxy
-      docker run --privileged --net=host k8s.gcr.io/kube-proxy-amd64:v1.10.2 kube-proxy --cleanup
+      docker run --privileged --net=host k8s.gcr.io/kube-proxy-arm64:v1.10.2 kube-proxy --cleanup
       ;;
     *)
       echo "Unsupported CNI plugin '${CNI_PLUGIN}'" >&2
